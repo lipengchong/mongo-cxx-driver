@@ -330,9 +330,11 @@ bsoncxx::builder::basic::document build_find_options_document(const options::fin
     if (options.cursor_type()) {
         if (*options.cursor_type() == cursor::type::k_tailable) {
             options_builder.append(kvp("tailable", bsoncxx::types::b_bool{true}));
+            options_builder.append(kvp("oplogReplay", bsoncxx::types::b_bool{true})); // add for oplog find
         } else if (*options.cursor_type() == cursor::type::k_tailable_await) {
             options_builder.append(kvp("tailable", bsoncxx::types::b_bool{true}));
             options_builder.append(kvp("awaitData", bsoncxx::types::b_bool{true}));
+            options_builder.append(kvp("oplogReplay", bsoncxx::types::b_bool{true})); // add for oplog find 
         } else if (*options.cursor_type() == cursor::type::k_non_tailable) {
         } else {
             throw logic_error{error_code::k_invalid_parameter};
